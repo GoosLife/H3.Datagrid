@@ -1,23 +1,33 @@
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-image',
-  standalone: true,
-  imports: [],
-  templateUrl: './image.model.html',
-  styleUrl: './image.model.scss'
-})
 export class ImageModel {
   file: File;
   name: string;
-  constructor(file: File) {
+  type: string;
+  size: string;
+  description: string;
+
+  constructor(file: File, description: string = '', size: string = '', type: string = '', name: string = '') {
     // Check that file is actually an image
     if (!this.filter(file)) {
       throw new Error('Only images are allowed in the image storage');
     }
 
+    if (size == '') {
+      size = file.size.toString();
+    }
+
+    if (type == '') {
+      type = file.type;
+    }
+
+    if (name == '') {
+      name = file.name;
+    }
+
     this.file = file;
-    this.name = file.name;
+    this.name = name;
+    this.type = type;
+    this.size = size;
+    this.description = description;
   }
 
   /**
