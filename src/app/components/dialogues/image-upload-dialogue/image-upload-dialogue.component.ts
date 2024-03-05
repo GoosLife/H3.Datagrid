@@ -10,6 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { ImageStorageService } from '../../../services/image-storage.service';
 
+/**
+ * Component for the image upload dialogue.
+ */
 @Component({
   selector: 'app-image-dialogue',
   standalone: true,
@@ -29,6 +32,12 @@ import { ImageStorageService } from '../../../services/image-storage.service';
 export class ImageUploadDialogueComponent {
   image: ImageModel;
 
+  /**
+   * Constructs a new instance of the ImageUploadDialogueComponent.
+   * @param dialogRef - The reference to the dialog.
+   * @param data - The data passed to the dialog.
+   * @param imageStorageService - The service for image storage.
+   */
   constructor(
     public dialogRef: MatDialogRef<ImageUploadDialogueComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { file: File },
@@ -36,7 +45,7 @@ export class ImageUploadDialogueComponent {
   ) {
     this.image = new ImageModel(
       data.file,
-      '', // description
+      '', // description - there is no description until the user specifies it within this dialogue
       data.file.size.toString(), // size
       data.file.type.split('/')[1], // type
       data.file.name // name
@@ -45,6 +54,9 @@ export class ImageUploadDialogueComponent {
     // Generate a thumbnail here, setting `this.image.thumbnail` accordingly
   }
 
+  /**
+   * Closes the dialog.
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }

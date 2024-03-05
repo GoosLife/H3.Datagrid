@@ -12,6 +12,13 @@ export class ImageStorageService implements FileStorage {
   private imagesSubject$ = new BehaviorSubject<ImageModel[]>(this.imageArray);
   public images$ = this.imagesSubject$.asObservable();
 
+  /**
+   * Adds a file or an ImageModel to the image array.
+   * Files will be converted to ImageModel objects before being added to the array.
+   * Subscribers will be notified when the image has been added.
+   * 
+   * @param imageFile - The file or ImageModel to be added.
+   */
   addFile(imageFile: File | ImageModel): void {
     
     if (imageFile instanceof File) {
@@ -26,6 +33,11 @@ export class ImageStorageService implements FileStorage {
     }
   }
 
+  /**
+   * Retrieves the list of files as an observable.
+   * 
+   * @returns An observable that emits an array of ImageModel objects representing the files.
+   */
   getFiles(): Observable<Array<ImageModel>> {
     return this.imagesSubject$.asObservable();
   }

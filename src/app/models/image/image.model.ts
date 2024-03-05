@@ -7,7 +7,6 @@ export class ImageModel {
   url: string = '';
 
   constructor(file: File, description: string = 'No description provided', size: string = '', type: string = '', name: string = '') {
-    // Check that file is actually an image
     if (!this.filter(file)) {
       throw new Error('Only images are allowed in the image storage');
     }
@@ -29,24 +28,28 @@ export class ImageModel {
     this.type = type;
     this.size = size;
     this.description = description;
-    this.getUrl(this.file);
+    this.setUrl(this.file);
   }
 
   /**
-   * Check that file is an image - this is a rudimentary check that doesn't do much validation at all,
-   * but it demonstrates how the implementations of the FileStorage interface can be used to enforce rules.
-   *
-   * Here, we could also check for file integrity and other things that are specific to images, to ensure
-   * that only images are added to the image storage, and that they haven't been tampered with.
+   * Check that file is an image.
+   * This is a rudimentary check; files can call themselves images without it being true.
+   * But it's a good demonstration of how the image model can be used to perform verification checks,
+   * even if this particular check is not very thorough.
    * 
-   * @param image 
-   * @returns true, if the file is an image
+   * @param file - The file to be checked.
+   * @returns True if the file is an image, false otherwise.
    */
   private filter(file: File): boolean {
     return file.type.split('/')[0] === 'image';
   }
 
-  private getUrl(file: File): void {
+  /**
+   * Reads the file as a Data URL and sets the `url` property of the class.
+   * The url property will be a Base64 encoded string, which can be set directly as src on an img element.
+   * @param file - The file to read.
+   */
+  private setUrl(file: File): void {
     const reader = new FileReader();
     reader.onload = (result: any) => {
       this.url = result.target.result;

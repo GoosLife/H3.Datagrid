@@ -17,6 +17,7 @@
 }
 
 .thumbnail {
-    width:33vw;
-    height:auto;
+    max-width:33vw;
+    max-height:10vh;
+    padding-top:0.4rem;
 }

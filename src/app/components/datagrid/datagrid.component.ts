@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ImageStorageService } from '../../services/image-storage.service';
-import { Observable } from 'rxjs';
-import { ImageModel } from '../../models/image/image.model';
+import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
+import { Observable } from 'rxjs';
+
+import { ImageModel } from '../../models/image/image.model';
+import { ImageStorageService } from '../../services/image-storage.service';
 import { ImageDetailsDialogueComponent } from '../dialogues/image-details-dialogue/image-details-dialogue.component';
 
+/**
+ * Represents the DatagridComponent.
+ */
 @Component({
   selector: 'app-datagrid',
   standalone: true,
@@ -20,7 +26,10 @@ import { ImageDetailsDialogueComponent } from '../dialogues/image-details-dialog
   styleUrl: './datagrid.component.scss'
 })
 export class DatagridComponent implements OnInit {
+  
+  // Image stream from the image storage service.
   images$: Observable<Array<ImageModel>>;
+
   dataSource = new MatTableDataSource<ImageModel>();
   displayedColumns: string[] = ['name', 'thumbnail', 'description'];
 
@@ -28,6 +37,7 @@ export class DatagridComponent implements OnInit {
     this.images$ = this.imageStorageService.getFiles();
   }
 
+  // On init, subscribe to images from the data source and update the data source when new images are added.
   ngOnInit(): void {
     this.imageStorageService.images$.subscribe(files => {
       console.log('Received files: ', files);
@@ -35,6 +45,10 @@ export class DatagridComponent implements OnInit {
     })
   }
 
+  /**
+   * Opens a modal box containing specific information about a row when it is clicked.
+   * @param row - The clicked row object.
+   */
   onRowClicked(row: any): void {
     let dialogWidth = '80%';
 
@@ -50,6 +64,10 @@ export class DatagridComponent implements OnInit {
     });
   }
 
+  /**
+   * Converts a file to a Base64 encoded string, which can be set directly as src on an img element.
+   * @param file - The file object (must be an image).
+   */
   getUrl(file: File) {
     const reader = new FileReader();
     reader.onloadend = () => {
