@@ -1,0 +1,22 @@
+.elementName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.elementNameCell {
+    max-width:33vw;
+}
+
+.elementDescription {
+    word-wrap: break-word;
+}
+
+.elementDescriptionCell {
+    max-width:33vw;
+}
+
+.thumbnail {
+    width:33vw;
+    height:auto;
+}

@@ -8,16 +8,25 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 })
 export class ImageStorageService implements FileStorage {
 
-  private images = new BehaviorSubject<ImageModel[]>([]);
-  public images$ = this.images.asObservable();
+  private imageArray: ImageModel[] = [];
+  private imagesSubject$ = new BehaviorSubject<ImageModel[]>(this.imageArray);
+  public images$ = this.imagesSubject$.asObservable();
 
-  addFile(imageFile: File): void {
-    const currentImages = this.images.value;
+  addFile(imageFile: File | ImageModel): void {
+    
+    if (imageFile instanceof File) {
+      // Create a new ImageModel from the file
+      const image = new ImageModel(imageFile);
+      this.imageArray.push(image);
+      this.imagesSubject$.next(this.imageArray);
+    }
+    else {
+      this.imageArray.push(imageFile);
+      this.imagesSubject$.next(this.imageArray);
+    }
+  }
 
-    // Create a new ImageModel from the file
-    const image = new ImageModel(imageFile);
-
-    const updatedImages = [...currentImages, image];
-    this.images.next(updatedImages);
+  getFiles(): Observable<Array<ImageModel>> {
+    return this.imagesSubject$.asObservable();
   }
 }

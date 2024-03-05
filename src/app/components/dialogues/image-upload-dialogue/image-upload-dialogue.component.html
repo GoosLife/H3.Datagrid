@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Upload Image Details</h1>
-<div mat-dialog-content>
-  <p>Enter the image's name and verify its type and size.</p>
+<h1 mat-dialog-title class="uploadTitle">Upload Image Details</h1>
+<div mat-dialog-content class="uploadFormContainer">
+  <p class="uploadHelpText">Enter the image's name and verify its type and size.</p>
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="image.name">
@@ -9,8 +9,8 @@
     <mat-label>Type</mat-label>
     <mat-select [(ngModel)]="image.type">
       <mat-option value="jpeg">JPEG</mat-option>
+      <mat-option value="jpg">JPG</mat-option>
       <mat-option value="png">PNG</mat-option>
-      <!-- Add other types as needed -->
     </mat-select>
   </mat-form-field>
   <mat-form-field>
@@ -18,11 +18,11 @@
     <input matInput [value]="image.size + ' bytes'" readonly>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Size</mat-label>
-    <input matInput [value]="image.description + ' bytes'" readonly>
+    <mat-label>Description</mat-label>
+    <input matInput placeholder="Enter a description..." [(ngModel)]="image.description">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="image" cdkFocusInitial>Save</button>
+  <button mat-button mat-raised-button color="primary" [mat-dialog-close]="image" cdkFocusInitial>Save</button>
 </div>

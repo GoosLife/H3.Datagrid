@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ImageDialogueComponent } from '../dialogues/image-dialogue/image-dialogue.component';
+import { ImageUploadDialogueComponent } from '../dialogues/image-upload-dialogue/image-upload-dialogue.component';
 import { ImageStorageService } from '../../services/image-storage.service';
 
 @Component({
   selector: 'app-fileuploader',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './fileuploader.component.html',
   styleUrl: './fileuploader.component.scss'
 })
@@ -16,13 +19,21 @@ export class FileuploaderComponent {
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      const dialogRef = this.dialog.open(ImageDialogueComponent, {
-        width: '250px',
+      let dialogWidth = '50%';
+
+      // Check if mobile
+      if (window.innerWidth < 768) {
+        dialogWidth = '80%';
+      }
+
+      const dialogRef = this.dialog.open(ImageUploadDialogueComponent, {
+        width: dialogWidth,
         data: { file: file }
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          console.log(result);
           this.imageStorageService.addFile(result);
         }
       });

@@ -4,8 +4,9 @@ export class ImageModel {
   type: string;
   size: string;
   description: string;
+  url: string = '';
 
-  constructor(file: File, description: string = '', size: string = '', type: string = '', name: string = '') {
+  constructor(file: File, description: string = 'No description provided', size: string = '', type: string = '', name: string = '') {
     // Check that file is actually an image
     if (!this.filter(file)) {
       throw new Error('Only images are allowed in the image storage');
@@ -28,6 +29,7 @@ export class ImageModel {
     this.type = type;
     this.size = size;
     this.description = description;
+    this.getUrl(this.file);
   }
 
   /**
@@ -42,5 +44,13 @@ export class ImageModel {
    */
   private filter(file: File): boolean {
     return file.type.split('/')[0] === 'image';
+  }
+
+  private getUrl(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (result: any) => {
+      this.url = result.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 }

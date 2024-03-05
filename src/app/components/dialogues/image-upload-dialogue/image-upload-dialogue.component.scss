@@ -1,0 +1,15 @@
+@import "../../../../styles.scss";
+
+.uploadFormContainer {
+    display:flex;
+    flex-direction:column;
+}
+
+.uploadTitle, .uploadFormContainer {
+    background-color:$primary-color;
+    color:$secondary-color;
+}
+
+.uploadHelpText {
+    margin-top:1rem;
+}

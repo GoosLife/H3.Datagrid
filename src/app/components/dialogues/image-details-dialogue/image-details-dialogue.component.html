@@ -1,0 +1,11 @@
+<mat-dialog-content>
+    <h2>{{ image.name }}</h2>
+    <p>Type: {{ image.type }}</p>
+    <p>Size: {{ image.size }}</p>
+    <p>Description: {{ image.description }}</p>
+    <img [src]="image.url" alt="{{ image.name }}" style="max-width:100%;" />
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

@@ -10,7 +10,7 @@ import { DatagridComponent as DataGridComponent } from './components/datagrid/da
   imports: [
     RouterOutlet,
     FileuploaderComponent,
-    DataGridComponent
+    DataGridComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
